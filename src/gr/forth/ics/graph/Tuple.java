@@ -19,7 +19,7 @@ import java.util.Set;
  * is, eligible for garbage collection). This removes the need for "cleanup" style methods in algorithms
  * that decorate entities with data.
  *
- * Implementation note: in the standard implementation of Tuple ({@linkplain gr.forth.ics.graph.concrete.TupleImpl}), weak
+ * Implementation note: in the standard implementation of Tuple ({@linkplain gr.forth.ics.graph.TupleImpl}), weak
  * entries are actually faster than normal, strong entries. Also, a <i>single</i> internal map is used
  * to store both types of entries, to save memory (both in terms of memory used by the maps themselves <i>and</i>
  * for storing the references to the maps).

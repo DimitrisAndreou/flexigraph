@@ -14,7 +14,7 @@ import java.util.TreeMap;
  * K-core node partitioning of a graph. 
  * 
  * @see <a href="http://en.wikipedia.org/wiki/K-core">K-Core article on Wikipedia</a>
- * @see S. B. Seidman, 1983, Network structure and minimum degree, Social Networks 5:269-287
+ * @see "S. B. Seidman, 1983, Network structure and minimum degree, Social Networks 5:269-287"
  * @author Andreou Dimitris, email: jim.andreou (at) gmail.com
  */
 public class KCoreDecomposition {

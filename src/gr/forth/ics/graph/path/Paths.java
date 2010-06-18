@@ -49,7 +49,7 @@ public class Paths {
      * @param graph the graph into which the path is to be searched
      * @param start the node to start from
      * @param target the node to find
-     * @param the allowable direction of edges to follow while searching for a path
+     * @param direction the allowable direction of edges to follow while searching for a path
      * @return a path from {@literal start} node to {@literal target} node, or {@literal null}
      *              if no such path exists. If multiple paths exist, an arbitrary path of them is returned
      */

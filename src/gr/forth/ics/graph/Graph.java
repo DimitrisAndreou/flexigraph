@@ -18,8 +18,8 @@ import java.util.Collection;
  * @see InspectableGraph
  * @see Node
  * @see Edge
- * @see gr.forth.ics.graph.concrete.PrimaryGraph
- * @see gr.forth.ics.graph.concrete.SecondaryGraph
+ * @see gr.forth.ics.graph.PrimaryGraph
+ * @see gr.forth.ics.graph.SecondaryGraph
  * @author Andreou Dimitris, email: jim.andreou (at) gmail (dot) com
  */
 public interface Graph extends InspectableGraph {
@@ -132,8 +132,8 @@ public interface Graph extends InspectableGraph {
     /**
      * Returns whether this graph is <i>primary</i> or not.
      * @see Graph
-     * @see gr.forth.ics.graph.concrete.PrimaryGraph
-     * @see gr.forth.ics.graph.concrete.SecondaryGraph
+     * @see gr.forth.ics.graph.PrimaryGraph
+     * @see gr.forth.ics.graph.SecondaryGraph
      */
     boolean isPrimary();
     

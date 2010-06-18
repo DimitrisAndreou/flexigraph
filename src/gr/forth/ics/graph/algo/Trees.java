@@ -285,7 +285,7 @@ public class Trees {
      *
      * @param graph the graph that contains the tree
      * @param root the root of the tree
-     * @param directionToKids the direction of edges from the root (or any node) to its kids
+     * @param directionFromRootToKids the direction of edges from the root (or any node) to its kids
      * @return a SubtreeNodeCounter instance corresponding to the analysis of the tree
      */
     public static SubtreeAnalyzer analyzeSubtrees(InspectableGraph graph,
@@ -326,8 +326,6 @@ public class Trees {
 
     /**
      * Represents the number of nodes that exist in every subtree of a tree.
-     *
-     * @see Trees#findNodesPerSubtree(InspectableGraph, Node, Direction)
      */
     public static class SubtreeAnalyzer {
         private final InspectableGraph graph;

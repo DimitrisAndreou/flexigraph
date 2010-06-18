@@ -25,7 +25,7 @@ import java.util.TreeMap;
  * of the degree taken into consideration is customizable via a specified {@link Direction},
  * i.e. {@code Direction.OUT} means to use the out-degree of the nodes, {@code Direction.IN}
  * the in-degree, and {@code Direction.EITHER} the total (in and out) degree
- * (see {@link #BucketSort(InspectableGraph, Direction)}.
+ * (see {@link #DegreeSorter(InspectableGraph, Direction)}.
  *
  * <p>The BucketSort automatically updates itself when the graph is modified, so it always
  * represents the most up-to-date degree information of the graph.

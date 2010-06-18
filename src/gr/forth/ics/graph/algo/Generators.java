@@ -410,7 +410,7 @@ public class Generators {
      * must be graphical, as defined in {@link Graphs#isSequenceGraphical(int[])}.
      * @param g the graph object in which to create the graph
      * @param nodeDegreeDistribution the distribution of node degrees, which must be graphical
-     * @see Graphs#isSequenceGraphical(int[]) 
+     * @see GraphChecker#isSequenceGraphical(int[]) 
      */
     public static void createGeneral(Graph g, int ... nodeDegreeDistribution) {
         createGeneral(g, new Random(), nodeDegreeDistribution);
@@ -422,7 +422,7 @@ public class Generators {
      * @param g the graph object in which to create the graph
      * @param random the random number generator to use
      * @param nodeDegreeDistribution the distribution of node degrees, which must be graphical
-     * @see Graphs#isSequenceGraphical(int[]) 
+     * @see GraphChecker#isSequenceGraphical(int[])
      */
     public static void createGeneral(Graph g, Random random, int ... nodeDegreeDistribution) {
         Args.notNull(nodeDegreeDistribution);
