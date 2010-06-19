@@ -2,7 +2,6 @@ package gr.forth.ics.graph.io.gml;
 
 import gr.forth.ics.graph.io.*;
 import gr.forth.ics.graph.Edge;
-import gr.forth.ics.graph.FlexiGraph;
 import gr.forth.ics.graph.InspectableGraph;
 import gr.forth.ics.graph.Node;
 import gr.forth.ics.graph.Tuple;
@@ -56,9 +55,6 @@ public class GmlWriter implements GraphWriter {
             final Object idKey = new Object();
             out.print("Creator \"");
             out.print(getClass());
-            out.println("\"");
-            out.print("Version \"");
-            out.print(FlexiGraph.version());
             out.println("\"");
             out.println("graph");
             open();

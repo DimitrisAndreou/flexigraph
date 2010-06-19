@@ -407,7 +407,7 @@ public class Generators {
     
     /**
      * Creates a graph that tries to honor the specified degree distribution. The degree distribution
-     * must be graphical, as defined in {@link Graphs#isSequenceGraphical(int[])}.
+     * must be graphical, as defined in {@link GraphChecker#isSequenceGraphical(int[])}.
      * @param g the graph object in which to create the graph
      * @param nodeDegreeDistribution the distribution of node degrees, which must be graphical
      * @see GraphChecker#isSequenceGraphical(int[]) 
@@ -418,7 +418,7 @@ public class Generators {
     
     /**
      * Creates a graph that tries to honor the specified degree distribution. The degree distribution
-     * must be graphical, as defined in {@link Graphs#isSequenceGraphical(int[])}.
+     * must be graphical, as defined in {@link GraphChecker#isSequenceGraphical(int[])}.
      * @param g the graph object in which to create the graph
      * @param random the random number generator to use
      * @param nodeDegreeDistribution the distribution of node degrees, which must be graphical
