@@ -48,6 +48,7 @@ public class RandomChooser<T> {
             probs[k] -= (1 - probs[i]);
             if (probs[k] < 1.0) {
                 greater.pop();
+                if (greater.isEmpty()) break;
                 smaller.push(k);
             }
         }
