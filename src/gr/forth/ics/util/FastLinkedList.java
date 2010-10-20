@@ -120,7 +120,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
      */
     public E getFirst() {
         checkExisting(head);
-        return head.value;
+        return head.getValue();
     }
     
     /**
@@ -129,7 +129,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
      */
     public E getLast() {
         checkExisting(tail);
-        return tail.value;
+        return tail.getValue();
     }
     
     private void checkExisting(ListCell<E> cell) {
@@ -248,13 +248,13 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         if (head == tail) {
             tail = null;
             try {
-                return head.value;
+                return head.getValue();
             } finally {
                 head = null;
             }
         }
         try {
-            return head.value;
+            return head.getValue();
         } finally {
             head.next.prev = null;
             head = head.next;
@@ -271,13 +271,13 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         if (head == tail) {
             head = null;
             try {
-                return tail.value;
+                return tail.getValue();
             } finally {
                 tail = null;
             }
         }
         try {
-            return tail.value;
+            return tail.getValue();
         } finally {
             tail.prev.next = null;
             tail = tail.prev;
@@ -333,8 +333,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         if (tail == cell) {
             tail = cell.prev;
         }
-        cell.isDeleted = true;
-        cell.value = null;
+        cell.markDeleted();
         size--;
     }
     
@@ -348,11 +347,11 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         ListCell<E> curr = head;
         while (curr != null) {
             if (element == null) {
-                if (curr.value == null) {
+                if (curr.getValue() == null) {
                     return new AccessorImpl<E>(curr, this);
                 }
             } else {
-                if (element.equals(curr.value)) {
+                if (element.equals(curr.getValue())) {
                     return new AccessorImpl<E>(curr, this);
                 }
             }
@@ -413,14 +412,12 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         private ListCell<E> next;
         private ListCell<E> prev;
         private ListCell<E> last;
-        private final boolean isIndexValid;
         private int index;
         
         ListIteratorImpl(int offset) {
             if (offset < 0 || offset > size) {
                 throw new NoSuchElementException();
             }
-            this.isIndexValid = true;
             index = offset;
             if (offset <= size / 2) {
                 next = head;
@@ -445,7 +442,6 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
             this.last = null;
             this.prev = reference.cell;
             this.next = prev.next;
-            isIndexValid = false;
         }
         
         public void add(E obj) {
@@ -470,14 +466,14 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         }
         
         private void proceedForward() {
-            while (next != null && next.isDeleted) {
+            while (next != null && next.isDeleted()) {
                 prev = next;
                 next = next.next;
             }
         }
         
         private void proceedBackward() {
-            while (prev != null && prev.isDeleted) {
+            while (prev != null && prev.isDeleted()) {
                 next = prev;
                 prev = prev.prev;
             }
@@ -498,7 +494,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
                 throw new NoSuchElementException();
             }
             try {
-                return next.value;
+                return next.getValue();
             } finally {
                 index++;
                 last = next;
@@ -516,7 +512,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
                 throw new NoSuchElementException();
             }
             try {
-                return prev.value;
+                return prev.getValue();
             } finally {
                 index--;
                 last = prev;
@@ -530,12 +526,12 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         }
         
         public void remove() {
-            if (last == null || last.isDeleted) {
+            if (last == null || last.isDeleted()) {
                 throw new IllegalStateException();
             }
             index--;
             size--;
-            last.isDeleted = true;
+            last.markDeleted();
             prev = last.prev;
             next = last.next;
             if (prev != null) {
@@ -555,7 +551,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
             if (last == null) {
                 throw new IllegalStateException();
             }
-            last.value = element;
+            last.setValue(element);
         }
     }
 
@@ -588,7 +584,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         }
 
         public boolean remove() {
-            if (cell.isDeleted) {
+            if (cell.isDeleted()) {
                 return false;
             }
             owner.removeCell(cell);
@@ -598,7 +594,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
 
         public E get() {
             checkOwner();
-            return cell.value;
+            return cell.getValue();
         }
 
         public FastLinkedList<E> owner() {
@@ -606,15 +602,11 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
         }
 
         public boolean isRemoved() {
-            return cell.isDeleted;
+            return cell.isDeleted();
         }
 
         public E set(E newValue) {
-            try {
-                return cell.value;
-            } finally {
-                cell.value = newValue;
-            }
+            return cell.setValue(newValue);
         }
 
         public Accessor<E> addAfter(E value) {
@@ -633,7 +625,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
             if (r.cell == cell) {
                 return;
             }
-            E value = cell.value;
+            E value = cell.getValue();
             FastLinkedList<E> owner = this.owner;
             this.remove();
             update(r.addAfter(value), owner);
@@ -645,7 +637,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
             if (r.cell == cell) {
                 return;
             }
-            E value = cell.value;
+            E value = cell.getValue();
             FastLinkedList<E> owner = this.owner;
             this.remove();
             update(r.addBefore(value), owner);
@@ -653,7 +645,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
 
         public void moveToBack() {
             checkOwner();
-            E value = cell.value;
+            E value = cell.getValue();
             FastLinkedList<E> owner = this.owner;
             this.remove();
             update(owner.addLast(value), owner);
@@ -661,7 +653,7 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
 
         public void moveToFront() {
             checkOwner();
-            E value = cell.value;
+            E value = cell.getValue();
             FastLinkedList<E> owner = this.owner;
             this.remove();
             update(owner.addFirst(value), owner);
@@ -699,13 +691,38 @@ public class FastLinkedList<E> extends AbstractSequentialList<E> implements Seri
     }
 
     private static class ListCell<E> implements Serializable {
-        boolean isDeleted;
+        enum Sentinel {
+            TOMBSTONE;
+        }
+
         ListCell<E> prev;
         ListCell<E> next;
-        E value;
+        private E value;
 
         ListCell(E value) {
             this.value = value;
+        }
+
+        boolean isDeleted() {
+            return value == Sentinel.TOMBSTONE;
+        }
+
+        @SuppressWarnings("unchecked") //safe, because if the unsafe cast
+        //is performed, then we always return a value of null to the outer world
+        void markDeleted() {
+            value = (E)(Object)Sentinel.TOMBSTONE;
+        }
+
+        E getValue() {
+            return value;
+        }
+
+        E setValue(E value) {
+            try {
+                return this.value;
+            } finally {
+                this.value = value;
+            }
         }
 
         public String toString() {
