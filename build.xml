@@ -8,7 +8,7 @@
         <delete dir="build/classes/examples"/>
     </target>
 
-    <target name="dist" depends="clean,compile,jar,javadoc"
+    <target name="dist" depends="compile,jar,javadoc"
             description="Create a self-contained, package with this project's artifacts">
         <delete dir="nbproject/private"/>
         <property name="zip.file" value="dist/Flexigraph.zip"/>
